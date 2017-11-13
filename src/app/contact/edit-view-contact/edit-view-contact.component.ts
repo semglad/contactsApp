@@ -3,11 +3,12 @@ import {Contact} from '../contacts';
 import {ContactService} from '../services/contact.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'ca-add-contact',
   templateUrl: './edit-view-contact.component.html',
-  styleUrls: ['./edit-view.css']
+  styleUrls: ['./edit-view-contact.component.css']
 })
 export class AddContactComponent implements OnInit {
 
@@ -16,13 +17,15 @@ export class AddContactComponent implements OnInit {
   isEdited: boolean;
   isNew: boolean;
   inputValid: boolean;
+  googleMapSrc: SafeResourceUrl;
 
-  constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute) {
+  constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute, public sanitizer: DomSanitizer) {
     this.contacts = [];
     this.contact = new Contact();
     this.isEdited = true;
     this.isNew = false;
     this.inputValid = true;
+    this.googleMapSrc = '';
   }
 
   ngOnInit() {
@@ -39,6 +42,10 @@ export class AddContactComponent implements OnInit {
     if (this.route.snapshot.paramMap.get('new')) {
       this.isNew = JSON.parse(this.route.snapshot.paramMap.get('new').toLowerCase());
     }
+
+    this.googleMapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
+      'https://www.google.com/maps/embed/v1/place?key=AIzaSyBRHDQ7_XM5I9Bm6W7ZEG0VdhBl6k2nRMU&q='
+      + this.contact.streetAddress + ',' + this.contact.city);
   }
 
   checkValidity (contact: Contact) {

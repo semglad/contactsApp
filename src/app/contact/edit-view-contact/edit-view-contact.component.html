@@ -1,4 +1,5 @@
 <div *ngIf="isEdited">
+  <br>
   <mat-form-field>
     <input matInput [(ngModel)]="contact.firstName" placeholder="First name" required>
     <mat-error>This is required information!</mat-error>
@@ -28,6 +29,7 @@
   <button mat-raised-button (click)="submitContact(true)">Cancel</button>
 </div>
 <div *ngIf="!isEdited">
+  <br>
   <mat-form-field>
     <input matInput [(ngModel)]="contact.firstName" placeholder="First name" disabled>
   </mat-form-field>
@@ -41,7 +43,7 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="contact.firstName" placeholder="Street address" disabled>
+    <input matInput [(ngModel)]="contact.streetAddress" placeholder="Street address" disabled>
   </mat-form-field>
   <br>
   <mat-form-field>
@@ -50,4 +52,12 @@
   <br>
   <button mat-raised-button (click)="editContact()">Edit</button>
   <button mat-raised-button (click)="submitContact(true, null, true)">Back to list</button>
+</div>
+<div>
+  <iframe
+    width="266"
+    height="250"
+    frameborder="0" style="border:0"
+    [src]="googleMapSrc" allowfullscreen>
+  </iframe>
 </div>

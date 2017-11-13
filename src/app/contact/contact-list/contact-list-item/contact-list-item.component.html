@@ -3,7 +3,7 @@
   <h4 mat-line>{{contact.firstName}}</h4>
   <p mat-line>{{contact.lastName}}</p>
   <span *ngIf="toolsVisible" style="display: inline-block; width: 300px; text-align: right; padding-right: 10px">
-    {{contact.phone}}
+    {{contact | contactPhone}}
   </span>
   <span *ngIf="toolsVisible">
     <mat-icon mat-list-icon (click)="onUpdateContact()">edit</mat-icon>

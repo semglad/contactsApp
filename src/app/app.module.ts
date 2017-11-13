@@ -9,6 +9,7 @@ import { MaterialComponentsModule} from './material-components/material-componen
 import { FormsModule} from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { AddContactComponent } from './contact/edit-view-contact/edit-view-contact.component';
+import { ContactPhonePipe } from './contact/Pipes/contact-phone.pipe';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     AppComponent,
     ContactListComponent,
     ContactListItemComponent,
-    AddContactComponent
+    AddContactComponent,
+    ContactPhonePipe
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ContactService} from '../services/contact.service';
 import {Contact} from '../contacts';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ca-contact-list',
@@ -12,7 +13,7 @@ export class ContactListComponent implements OnInit {
   contacts: Contact[];
   contact: Contact;
 
-  constructor(private contactService: ContactService) {
+  constructor(private contactService: ContactService, private router: Router) {
     this.contacts = [];
     this.contact = new Contact();
   }
@@ -36,5 +37,9 @@ export class ContactListComponent implements OnInit {
   onContactDelete(contact: Contact) {
     this.contactService.deleteContact(contact.id);
     this.contacts = this.contactService.findContacts();
+  }
+
+  addContact() {
+    this.router.navigate(['/edit-view-contact', true]);
   }
 }
