@@ -1,3 +1,11 @@
-<p>
-  contact-list works!
-</p>
+<div *ngIf="contacts.length >= 1">
+  <mat-nav-list dense>
+    <ca-contact-list-item *ngFor="let contact of contacts" [contact]="contact"
+                        (deleteContact)="onContactDelete($event)"
+                        (submitContact)="submitContact(false, $event)">
+    </ca-contact-list-item>
+  </mat-nav-list>
+</div>
+<div *ngIf="contacts.length < 1">
+  No contacts to show here...
+</div>

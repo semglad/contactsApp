@@ -1,0 +1,53 @@
+<div *ngIf="isEdited">
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.firstName" placeholder="First name" required>
+    <mat-error>This is required information!</mat-error>
+  </mat-form-field>
+    <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.lastName" placeholder="Last name" required>
+    <mat-error>This is required information!</mat-error>
+  </mat-form-field>
+    <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.phone" placeholder="Phone number" required>
+    <mat-error>This is required information!</mat-error>
+  </mat-form-field>
+    <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.streetAddress" placeholder="Street address" required>
+    <mat-error>This is required information!</mat-error>
+  </mat-form-field>
+    <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.city" placeholder="City" required>
+    <mat-error>This is required information!</mat-error>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button (click)="submitContact()">Submit</button>
+  <button mat-raised-button (click)="submitContact(true)">Cancel</button>
+</div>
+<div *ngIf="!isEdited">
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.firstName" placeholder="First name" disabled>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.lastName" placeholder="Last name" disabled>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.phone" placeholder="Phone number" disabled>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.firstName" placeholder="Street address" disabled>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="contact.city" placeholder="City" disabled>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button (click)="editContact()">Edit</button>
+  <button mat-raised-button (click)="submitContact(true, null, true)">Back to list</button>
+</div>
