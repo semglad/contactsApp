@@ -9,9 +9,13 @@ import {Router} from '@angular/router';
 export class AppComponent {
   title = 'contacts-app';
   navbarVisible: boolean;
+  isSmallScreen: boolean;
+  isLoggedIn: boolean;
 
   constructor (private router: Router) {
     this.navbarVisible = false;
+    this.isSmallScreen = false;
+    this.isLoggedIn = false;
   }
 
   showAddUser () {
@@ -25,5 +29,13 @@ export class AppComponent {
   toggleNavbar() {
     this.navbarVisible = !this.navbarVisible;
   }
-}
 
+  checkIfSmallScreen(isSmallScreen: boolean) {
+    this.isSmallScreen = isSmallScreen;
+    console.log('Small');
+  }
+
+  logUserInOut(loggedIn: boolean) {
+    this.isLoggedIn = loggedIn;
+  }
+}

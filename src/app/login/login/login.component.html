@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input matInput [(ngModel)]="loginName" placeholder="Login name">
+</mat-form-field>
+<br>
+<mat-form-field>
+  <input type="password" matInput [(ngModel)]="loginPassword" placeholder="Login password">
+</mat-form-field>
+<br>
+<button mat-raised-button (click)="submitLogin(false)" [disabled]="checkForEmptyFields()">Submit</button>
+<p *ngIf="loginInvalid" style="color: red">Please check credential validity!</p>

@@ -1,5 +1,5 @@
 <mat-list-item (click)="onContactSelect()" (mouseenter)="toolsVisible=true" (mouseleave)="toolsVisible=false">
-  <mat-icon matListIcon>face</mat-icon>
+  <mat-icon *ngIf="!isSmallScreen" matListIcon>face</mat-icon>
   <h4 mat-line>{{contact.firstName}}</h4>
   <p mat-line>{{contact.lastName}}</p>
   <span *ngIf="toolsVisible" style="display: inline-block; width: 300px; text-align: right; padding-right: 10px">

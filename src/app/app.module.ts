@@ -10,6 +10,8 @@ import { FormsModule} from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { AddContactComponent } from './contact/edit-view-contact/edit-view-contact.component';
 import { ContactPhonePipe } from './contact/Pipes/contact-phone.pipe';
+import {BreakpointObserver, MediaMatcher} from '@angular/cdk/layout';
+import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
   {
@@ -40,7 +42,8 @@ const routes: Routes = [
     ContactListComponent,
     ContactListItemComponent,
     AddContactComponent,
-    ContactPhonePipe
+    ContactPhonePipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [
-    ContactService
+    ContactService,
+    BreakpointObserver,
+    MediaMatcher
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,13 @@
 <div *ngIf="contacts.length >= 1">
-  <mat-nav-list dense>
-    <ca-contact-list-item *ngFor="let contact of contacts" [contact]="contact"
+  <mat-nav-list [attr.dense]="isSmallScreen ? true : null">
+    <ca-contact-list-item *ngFor="let contact of contacts" [contact]="contact" [isSmallScreen]="isSmallScreen"
                         (deleteContact)="onContactDelete($event)"
                         (submitContact)="submitContact(false, $event)">
     </ca-contact-list-item>
   </mat-nav-list>
 </div>
 <div *ngIf="contacts.length < 1">
+  <br>
   No contacts to show here...
 </div>
 <div>

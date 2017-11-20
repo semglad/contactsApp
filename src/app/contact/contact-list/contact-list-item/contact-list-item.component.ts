@@ -12,6 +12,7 @@ export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
   @Output() deleteContact: EventEmitter<Contact>;
   toolsVisible: boolean;
+  @Input() isSmallScreen: boolean;
 
   constructor(private router: Router) {
     this.deleteContact = new EventEmitter();
