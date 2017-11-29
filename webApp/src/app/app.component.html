@@ -1,18 +1,18 @@
 <div fxLayout="column" fxFlexFill>
-  <mat-toolbar *ngIf="!isSmallScreen" fxLayoutAlign="left center" class="toolbar mat-elevation-z4">
+  <mat-toolbar *ngIf="!isSmallScreen" fxLayoutAlign="left center" class="ca-toolbar mat-elevation-z4">
     <button mat-icon-button class="icons" mat-list-icon="list" (click)="sidenav.toggle()"><mat-icon fxLayoutAlign="left center">list</mat-icon></button> &emsp; <h1>{{title}}</h1>
   </mat-toolbar>
   <div fxLayout="row" fxFlex>
     <mat-sidenav-container fxFlex>
-      <mat-sidenav #sidenav class="navbar">
+      <mat-sidenav #sidenav class="ca-navbar">
         <br>
-        <button class="sidenavButton" mat-raised-button (click)="sidenav.close(); showAddUser()">Add user</button>
+        <button class="ca-sidenavButton" mat-raised-button (click)="sidenav.close(); showAddUser()">Add user</button>
         <br>
-        <button class="sidenavButton" mat-raised-button (click)="sidenav.close(); showListUsers()">List users</button>
+        <button class="ca-sidenavButton" mat-raised-button (click)="sidenav.close(); showListUsers()">List users</button>
         <br>
-        <button class="sidenavButton" mat-raised-button (click)="sidenav.close(); logUserInOut(false)">Log out</button>
+        <button class="ca-sidenavButton" mat-raised-button (click)="sidenav.close(); logUserInOut(false)">Log out</button>
       </mat-sidenav>
-    <div class="main-area" fxLayout="column" fxFlexFill>
+    <div class="ca-main-area" fxLayout="column" fxFlexFill>
       <router-outlet *ngIf="isLoggedIn" (emitaIsSmallScreen)="checkIfSmallScreen($event)"></router-outlet>
       <ca-login *ngIf="!isLoggedIn" (userLoggedIn)="logUserInOut($event)"></ca-login>
     </div>

@@ -1,63 +1,62 @@
 import { Injectable } from '@angular/core';
+import {ContactLocalStorageService} from './contact-local-storage.service';
 import {Contact} from '../contacts';
+import {ContactHttpService} from './contact-http.service';
+import {Observable} from 'rxjs/Observable';
 import * as _ from 'lodash';
-import {Router} from '@angular/router';
 
 @Injectable()
 export class ContactService {
 
   private contacts: Contact[];
 
-  constructor(private router: Router) {
+  constructor(private localStorage: ContactLocalStorageService, private contactHttpService: ContactHttpService) {
+    this.contacts = [];
   }
 
-  findContacts() {
-    return JSON.parse(localStorage.getItem('caContacts'));
-  }
-
-  findContactById(id: number): Contact {
-    const contacts =  JSON.parse(localStorage.getItem('caContacts'));
-    return contacts[id];
-  }
-
-  saveContact(contact: Contact) {
-
-    let contacts = this.findContacts();
-
-    let maxId = 0;
-
-    if (contacts) {
-
-      for (let i = 0; i < contacts.length; i++) {
-
-        if (contacts[i].id === contact.id) {
-          contacts.splice(i, 1);
-          break;
-        }
-
-        if (contacts[i].id > maxId) {
-          maxId = contacts[i].id;
-        }
+  findContacts(): Observable<Contact[]> {
+//    return this.localStorage.findContacts();
+    return this.contactHttpService.get().map((contacts) => {
+      if (contacts) {
+        this.contacts = contacts;
+        return contacts;
       }
-    } else {
-      contacts = [];
-    }
 
-    if (!contact.id) {
-      contact.id = maxId + 1;
-    }
-
-    contacts.push(contact);
-    localStorage.setItem('caContacts', JSON.stringify(contacts));
-
-    this.router.navigate(['/contacts', contact.id, false]);
+      return this.contacts;
+    });
   }
 
-  deleteContact(id: number) {
-    const contacts = JSON.parse(localStorage.getItem('caContacts'));
+  findContactById (id: number) {
 
-    _.remove(contacts, {'id': id});
+    let cachedContact = null;
+    let errorCounter = 0;
 
-    localStorage.setItem('caContacts', JSON.stringify((contacts)));
+    while (!cachedContact) {
+      cachedContact = _.find(this.contacts, {'id': id});
+
+      if (!cachedContact) {
+        this.findContacts();
+      }
+
+      if (errorCounter > 3 || cachedContact) {
+        break;
+      }
+
+      errorCounter++;
+    }
+      return cachedContact;
+//    return this.localStorage.findContactById(id);
+  }
+
+  saveContact (contact: Contact) {
+    this.contactHttpService.create(contact);
+//    this.localStorage.saveContact(contact);
+  }
+
+  deleteContact (id: number): Observable<boolean> {
+    return this.contactHttpService.del(id).map((result) => {
+      return true;
+    });
+//    this.localStorage.deleteContact(id);
   }
 }

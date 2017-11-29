@@ -6,10 +6,10 @@
     </ca-contact-list-item>
   </mat-nav-list>
 </div>
-<div *ngIf="contacts.length < 1">
+<div *ngIf="!contacts.length">
   <br>
   No contacts to show here...
 </div>
 <div>
-  <button class="fab" (click)="addContact()"><p class="plusSign">+</p></button>
+  <button class="ca-fab" (click)="addContact()"><p class="ca-plusSign">+</p></button>
 </div>

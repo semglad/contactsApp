@@ -1,8 +1,8 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {ContactService} from '../services/contact.service';
 import {Contact} from '../contacts';
 import {Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {ContactService} from '../services/contact.service';
 
 @Component({
   selector: 'ca-contact-list',
@@ -18,13 +18,13 @@ export class ContactListComponent implements OnInit {
 
   constructor(private contactService: ContactService, private router: Router, private breakpointObserver: BreakpointObserver) {
     this.contacts = [];
-    this.contact = new Contact();
+//    this.contact = new Contact();
     this.isSmallScreen = false;
     this.emitIsSmallScreen = new EventEmitter();
   }
 
   ngOnInit() {
-    this.contacts = this.contactService.findContacts();
+//    this.contacts = this.contactService.findContacts();
 
     this.breakpointObserver.observe([
       '(max-width: 299px)'
@@ -32,23 +32,33 @@ export class ContactListComponent implements OnInit {
       this.isSmallScreen = result.matches;
       this.emitIsSmallScreen.emit(this.isSmallScreen);
     });
+
+    this.getContacts();
+  }
+
+  getContacts() {
+    this.contactService.findContacts().subscribe((contacts: Contact[]) => {
+      this.contacts = contacts;
+    });
   }
 
   submitContact(cancel: boolean, contact?: Contact) {
     if (!cancel) {
-      if (contact) {
+//      if (contact) {
         this.contactService.saveContact(Object.assign({}, contact));
-      } else {
-        this.contactService.saveContact(Object.assign({}, this.contact));
-      }
+//      } else {
+//        this.contactService.saveContact(Object.assign({}, this.contact));
+//      }
     }
-    this.contact = new Contact();
-    this.contacts = this.contactService.findContacts();
+//    this.contact = new Contact();
+    this.getContacts();
   }
 
   onContactDelete(contact: Contact) {
-    this.contactService.deleteContact(contact.id);
-    this.contacts = this.contactService.findContacts();
+    this.contactService.deleteContact(contact.id).subscribe(() => {}, () => {},
+      () => {
+      this.getContacts();
+    });
   }
 
   addContact() {

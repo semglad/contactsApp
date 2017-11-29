@@ -7,38 +7,38 @@ html, body {
   margin: 0;
 }
 
-.toolbar {
+.ca-toolbar {
   background-color: #4CAF50;
   z-index: 2;
 }
 
-.navbar {
+.ca-navbar {
   background-color: #4CAF50;
 }
 
-.main-area {
+.ca-main-area {
   background-color: #FFFFFF;
 }
 
-.material-icons.mat-icon {
+.ca-material-icons.mat-icon {
   font-size: 48px;
   height: 48px;
   width: 48px;
 }
 
-.title-text {
+.ca-title-text {
   vertical-align: middle;
 }
 
-.span {
+.ca-span {
   text-align: left;
 }
 
-.sidenavButton {
+.ca-sidenavButton {
   width: 50px;
 }
 
-.fab {
+.ca-fab {
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -50,7 +50,7 @@ html, body {
   box-shadow: 0px 2px 5px #666;
 }
 
-.plusSign {
+.ca-plusSign {
   color: white;
   position: absolute;
   top: 0;

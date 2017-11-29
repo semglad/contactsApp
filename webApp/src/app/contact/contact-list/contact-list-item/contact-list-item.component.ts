@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Contact} from '../../contacts';
 import {Router} from '@angular/router';
+import {timeout} from 'rxjs/operator/timeout';
 
 @Component({
   selector: 'ca-contact-list-item',
@@ -13,16 +14,19 @@ export class ContactListItemComponent implements OnInit {
   @Output() deleteContact: EventEmitter<Contact>;
   toolsVisible: boolean;
   @Input() isSmallScreen: boolean;
+  deleteClicked: boolean;
 
   constructor(private router: Router) {
     this.deleteContact = new EventEmitter();
     this.toolsVisible = false;
+    this.deleteClicked = false;
   }
 
   ngOnInit() {
   }
 
-  onDeleteContact() {
+  onDeleteContact(event: Event) {
+    event.stopPropagation();
     this.deleteContact.emit(this.contact);
   }
 
@@ -31,6 +35,6 @@ export class ContactListItemComponent implements OnInit {
   }
 
   onContactSelect () {
-    this.router.navigate(['/contacts', this.contact.id, false]);
+      this.router.navigate(['/contacts', this.contact.id, false]);
   }
 }

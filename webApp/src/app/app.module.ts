@@ -4,14 +4,17 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ContactListComponent } from './contact/contact-list/contact-list.component';
 import { ContactListItemComponent } from './contact/contact-list/contact-list-item/contact-list-item.component';
-import { ContactService} from './contact/services/contact.service';
+import { ContactLocalStorageService} from './contact/services/contact-local-storage.service';
 import { MaterialComponentsModule} from './material-components/material-components.module';
 import { FormsModule} from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { AddContactComponent } from './contact/edit-view-contact/edit-view-contact.component';
-import { ContactPhonePipe } from './contact/Pipes/contact-phone.pipe';
+import { ContactPhonePipe } from './contact/pipes/contact-phone.pipe';
 import {BreakpointObserver, MediaMatcher} from '@angular/cdk/layout';
 import { LoginComponent } from './login/login/login.component';
+import {ContactService} from './contact/services/contact.service';
+import {ContactHttpService} from './contact/services/contact-http.service';
+import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -48,11 +51,14 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     MaterialComponentsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [
+    ContactLocalStorageService,
     ContactService,
+    ContactHttpService,
     BreakpointObserver,
     MediaMatcher
   ],

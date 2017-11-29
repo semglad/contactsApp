@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Contact} from '../contacts';
-import {ContactService} from '../services/contact.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import * as _ from 'lodash';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {ContactService} from '../services/contact.service';
 
 @Component({
   selector: 'ca-add-contact',
@@ -13,7 +12,6 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 export class AddContactComponent implements OnInit {
 
   contact: Contact;
-  contacts: Contact[];
   isEdited: boolean;
   isNew: boolean;
   inputValid: boolean;
@@ -21,7 +19,6 @@ export class AddContactComponent implements OnInit {
 
   constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute,
               public sanitizer: DomSanitizer) {
-    this.contacts = [];
     this.contact = new Contact();
     this.isEdited = true;
     this.isNew = false;
@@ -30,10 +27,9 @@ export class AddContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contacts = this.contactService.findContacts();
     const contactId = Number(this.route.snapshot.paramMap.get('id'));
-    if (contactId !== 0) {
-      this.contact = _.find(this.contacts, {id: contactId});
+    if (contactId) {
+      this.contact = this.contactService.findContactById(contactId);
     }
 
     if (this.route.snapshot.paramMap.get('edit')) {

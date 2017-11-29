@@ -9,6 +9,6 @@
     <mat-icon mat-list-icon (click)="onUpdateContact()">edit</mat-icon>
   </span>
   <span *ngIf="toolsVisible">
-    <mat-icon mat-list-icon (click)="onDeleteContact()">delete</mat-icon>
+    <mat-icon mat-list-icon (click)="onDeleteContact($event)">delete</mat-icon>
   </span>
 </mat-list-item>

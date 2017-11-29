@@ -37,5 +37,6 @@ export class AppComponent {
 
   logUserInOut(loggedIn: boolean) {
     this.isLoggedIn = loggedIn;
+    this.router.navigate(['/contacts']);
   }
 }
