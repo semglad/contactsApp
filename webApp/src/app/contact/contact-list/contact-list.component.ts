@@ -14,6 +14,7 @@ export class ContactListComponent implements OnInit {
   contacts: Contact[];
   contact: Contact;
   isSmallScreen: boolean;
+  isProcessing: boolean;
   @Output() emitIsSmallScreen: EventEmitter<boolean>;
 
   constructor(private contactService: ContactService, private router: Router, private breakpointObserver: BreakpointObserver) {
@@ -32,13 +33,14 @@ export class ContactListComponent implements OnInit {
       this.isSmallScreen = result.matches;
       this.emitIsSmallScreen.emit(this.isSmallScreen);
     });
-
+    this.isProcessing = true;
     this.getContacts();
   }
 
   getContacts() {
     this.contactService.findContacts().subscribe((contacts: Contact[]) => {
       this.contacts = contacts;
+      this.isProcessing = false;
     });
   }
 

@@ -35,8 +35,7 @@ namespace ContactsWebApi
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
 
-            var connection = @"Server=tcp:sgl.database.windows.net,1433;Initial Catalog=contactsdb;Persist Security Info=False;User ID=semglad;Password=RsTFDrjUNDd3pekiJzF0;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            services.AddDbContext<ContactContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
 
             services.AddMvc();
         }

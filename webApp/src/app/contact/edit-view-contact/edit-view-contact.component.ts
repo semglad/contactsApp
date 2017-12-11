@@ -42,7 +42,7 @@ export class AddContactComponent implements OnInit {
 
     if (this.contact.streetAddress) {
     this.googleMapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://www.google.com/maps/embed/v1/place?key=AIzaSyBRHDQ7_XM5I9Bm6W7ZEG0VdhBl6k2nRMU&zoom=21&q='
+      'https://www.google.com/maps/embed/v1/place?key=AIzaSyBRHDQ7_XM5I9Bm6W7ZEG0VdhBl6k2nRMU&zoom=13&q='
       + this.contact.streetAddress + ',' + this.contact.city);
     } else {
       this.googleMapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(

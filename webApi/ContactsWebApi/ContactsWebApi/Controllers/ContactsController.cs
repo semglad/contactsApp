@@ -25,7 +25,8 @@ namespace ContactsWebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-//            var contacts = _contactService.FindContacts();
+            //            var contacts = _contactService.FindContacts();
+            System.Threading.Thread.Sleep(20000);
             var contacts = _context.ContactItems.ToList();
             return new JsonResult(contacts);
         }

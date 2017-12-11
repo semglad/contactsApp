@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   contactsEndpointUrl: 'http://contactswebapi20171129012221.azurewebsites.net/api/contacts'
 };

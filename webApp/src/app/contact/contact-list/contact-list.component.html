@@ -6,9 +6,13 @@
     </ca-contact-list-item>
   </mat-nav-list>
 </div>
-<div *ngIf="!contacts.length">
+<div *ngIf="!contacts.length && !isProcessing">
   <br>
   No contacts to show here...
+</div>
+<div *ngIf="!contacts.length && isProcessing">
+  <br>
+  <table cellpadding="5"><tr><td><mat-spinner color="accent" [diameter]="25"></mat-spinner></td><td>Please wait while contacts are being fetched...</td></tr></table>
 </div>
 <div>
   <button class="ca-fab" (click)="addContact()"><p class="ca-plusSign">+</p></button>
