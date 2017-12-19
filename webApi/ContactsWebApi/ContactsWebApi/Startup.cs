@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using ContactsWebApi.Services;
 using Microsoft.EntityFrameworkCore;
 using ContactsWebApi.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ContactsWebApi
 {
@@ -38,6 +39,17 @@ namespace ContactsWebApi
 
             services.AddDbContext<ContactsDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
 
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.Audience = Configuration["AuthRequestParams:client_id"];
+                    options.Authority = Configuration["AuthRequestParams:loginUrl"] + Configuration["AuthRequestParams:directoryId"];
+                });
+
             services.AddMvc();
         }
 
@@ -51,6 +63,9 @@ namespace ContactsWebApi
 
             app.UseCors("ContactsAppPolicy");
             InitializeDatabase(app);
+
+            app.UseAuthentication();
+
             app.UseMvc();
         }
 

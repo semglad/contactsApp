@@ -23,12 +23,6 @@ namespace ContactsWebApi.Controllers
             Configuration = configuration;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return new OkResult();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]LoginCredentials loginCredential)
         {
