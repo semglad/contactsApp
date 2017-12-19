@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactsWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactsWebApi.Models
+namespace ContactsWebApi.Config
 {
-    public class ContactContext : DbContext
+    public class ContactsDbContext : DbContext
     {
-        public ContactContext(DbContextOptions<ContactContext> options)
+        public ContactsDbContext(DbContextOptions<ContactsDbContext> options)
             : base(options)
         {
         }
@@ -17,3 +18,4 @@ namespace ContactsWebApi.Models
 
     }
 }
+

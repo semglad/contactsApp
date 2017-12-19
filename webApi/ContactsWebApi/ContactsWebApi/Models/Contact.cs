@@ -1,8 +1,14 @@
-﻿namespace ContactsWebApi.Models
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace ContactsWebApi.Models
 {
     public class Contact
     {
+        [Key]
         public int Id { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
@@ -11,11 +17,6 @@
 
         public Contact()
         {
-            FirstName = "Testi";
-            LastName = "Testailu";
-            Phone = "+358 40 454 5454";
-            StreetAddress = "Katu 1";
-            City = "Kaupunki";
         }
 
         public Contact(int id, string firstName, string lastName, string phone, string streetAddress, string city)

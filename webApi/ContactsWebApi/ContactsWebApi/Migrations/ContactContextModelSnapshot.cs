@@ -7,10 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
+using ContactsWebApi.Config;
 
 namespace ContactsWebApi.Migrations
 {
-    [DbContext(typeof(ContactContext))]
+    [DbContext(typeof(ContactsDbContext))]
     partial class ContactContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

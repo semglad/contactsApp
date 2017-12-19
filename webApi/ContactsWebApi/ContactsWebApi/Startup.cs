@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ContactsWebApi.Services;
 using Microsoft.EntityFrameworkCore;
-using ContactsWebApi.Models;
+using ContactsWebApi.Config;
 
 namespace ContactsWebApi
 {
@@ -28,14 +28,15 @@ namespace ContactsWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IContactService, ContactService>();
-            services.AddSingleton<IContactRepository, ContactRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddCors(o => o.AddPolicy("ContactsAppPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
 
-            services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
+            services.AddDbContext<ContactsDbContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
 
             services.AddMvc();
         }
@@ -49,8 +50,18 @@ namespace ContactsWebApi
             }
 
             app.UseCors("ContactsAppPolicy");
-
+            InitializeDatabase(app);
             app.UseMvc();
+        }
+
+        private static void InitializeDatabase(IApplicationBuilder app)
+        {
+            //Configure metodiin
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ContactsDbContext>();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }
