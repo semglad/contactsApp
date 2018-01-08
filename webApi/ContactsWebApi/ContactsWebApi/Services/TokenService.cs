@@ -19,7 +19,7 @@ namespace ContactsWebApi.Services
             Configuration = configuration;
         }
 
-        public async Task<AccessToken> GetToken(LoginCredentials loginCredential, string endpoint)
+        public async Task<AccessToken> GetToken(LoginCredentials loginCredential)
         {
             AccessToken token = null;
 
@@ -37,7 +37,7 @@ namespace ContactsWebApi.Services
             {
                 httpClient.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
                 HttpContent content = new FormUrlEncodedContent(requestParams);
-                var response = await httpClient.PostAsync(endpoint, content);
+                var response = await httpClient.PostAsync(Configuration["AuthRequestParams:endpoint"], content);
 
                 if (response.IsSuccessStatusCode)
                 {

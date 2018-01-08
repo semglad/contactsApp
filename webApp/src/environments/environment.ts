@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  contactsEndpointUrl: 'http://localhost:50247/api/contacts'
+  contactsEndpointUrl: 'http://localhost:50247/api/contacts',
+  loginEndpointUrl: 'http://localhost:50247/api/auth'
 };

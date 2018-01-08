@@ -53,8 +53,13 @@ namespace ContactsWebApi.Repositories
 
         public void Delete(Contact contact)
         {
-            var contactToDelete = _context.ContactItems.FirstOrDefault(c => c.Id == contact.Id);
+            Contact contactToDelete = null;
 
+            if (contact != null)
+            {
+                contactToDelete = _context.ContactItems.FirstOrDefault(c => c.Id == contact.Id);
+            }
+            
             if (contactToDelete != null)
             {
                 _context.ContactItems.Remove(contactToDelete);

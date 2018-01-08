@@ -1,4 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {LoginService} from '../services/login.service';
+import {AccessCredentials} from '../accessCredentials';
+import {AccessToken} from '../accessToken';
 
 @Component({
   selector: 'ca-login',
@@ -12,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginInvalid: boolean;
   @Output() userLoggedIn: EventEmitter<boolean>;
 
-  constructor() {
+  constructor(private loginService: LoginService) {
     this.loginName = '';
     this.loginPassword = '';
     this.userLoggedIn = new EventEmitter();
@@ -28,14 +31,19 @@ export class LoginComponent implements OnInit {
 
   submitLogin(cancel: boolean) {
     this.loginInvalid = false;
+
+    const accessCredentials = new AccessCredentials(this.loginName, this.loginPassword);
+
     if (!cancel) {
-      if (this.loginName === 'Sem' && this.loginPassword === 'Glad') {
+      this.loginService.getAccessToken(accessCredentials).subscribe((accessToken: AccessToken) => {
         this.userLoggedIn.emit(!cancel);
-      } else {
-        this.loginInvalid = true;
-        this.loginName = '';
-        this.loginPassword = '';
-      }
+
+        if (!accessToken) {
+          this.loginInvalid = true;
+          this.loginName = '';
+          this.loginPassword = '';
+        }
+      });
     } else {
       this.userLoggedIn.emit(cancel);
     }

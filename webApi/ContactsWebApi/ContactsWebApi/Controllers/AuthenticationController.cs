@@ -26,7 +26,7 @@ namespace ContactsWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]LoginCredentials loginCredential)
         {
-            var accessToken = await _tokenService.GetToken(loginCredential, Configuration["AuthRequestParams:endpoint"]);
+            var accessToken = await _tokenService.GetToken(loginCredential);
 
             if (accessToken == null)
                 return new UnauthorizedResult();

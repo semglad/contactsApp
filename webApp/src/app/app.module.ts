@@ -14,7 +14,11 @@ import {BreakpointObserver, MediaMatcher} from '@angular/cdk/layout';
 import { LoginComponent } from './login/login/login.component';
 import {ContactService} from './contact/services/contact.service';
 import {ContactHttpService} from './contact/services/contact-http.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {LoginService} from './login/services/login.service';
+import {CaHttpInterceptor} from './config/ca-http-interceptor';
+import { HttpMessageDialogComponent } from './http-message-dialog/http-message-dialog.component';
+import {HelloService} from './config/hello.service';
 
 const routes: Routes = [
   {
@@ -46,7 +50,8 @@ const routes: Routes = [
     ContactListItemComponent,
     AddContactComponent,
     ContactPhonePipe,
-    LoginComponent
+    LoginComponent,
+    HttpMessageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,8 +64,18 @@ const routes: Routes = [
     ContactLocalStorageService,
     ContactService,
     ContactHttpService,
+    LoginService,
     BreakpointObserver,
-    MediaMatcher
+    MediaMatcher,
+    HelloService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CaHttpInterceptor,
+      multi: true
+    }
+  ],
+  entryComponents: [
+    HttpMessageDialogComponent
   ],
   bootstrap: [AppComponent]
 })

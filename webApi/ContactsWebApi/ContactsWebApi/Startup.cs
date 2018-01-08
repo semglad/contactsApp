@@ -13,6 +13,7 @@ using ContactsWebApi.Services;
 using Microsoft.EntityFrameworkCore;
 using ContactsWebApi.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsWebApi
 {
@@ -49,6 +50,11 @@ namespace ContactsWebApi
                     options.Audience = Configuration["AuthRequestParams:client_id"];
                     options.Authority = Configuration["AuthRequestParams:loginUrl"] + Configuration["AuthRequestParams:directoryId"];
                 });
+
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
 
             services.AddMvc();
         }
