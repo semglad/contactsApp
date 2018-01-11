@@ -19,19 +19,29 @@ namespace ContactsWebApi.Services
             Configuration = configuration;
         }
 
-        public async Task<AccessToken> GetToken(LoginCredentials loginCredential)
+        public async Task<AccessToken> GetToken(LoginCredentials loginCredential, string refreshToken = null)
         {
             AccessToken token = null;
 
             var requestParams = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("username", loginCredential.Username),
-                new KeyValuePair<string, string>("password", loginCredential.Password),
                 new KeyValuePair<string, string>("client_id", Configuration["AuthRequestParams:client_id"]),
                 new KeyValuePair<string, string>("resource", Configuration["AuthRequestParams:resource"]),
-                new KeyValuePair<string, string>("grant_type", Configuration["AuthRequestParams:grant_type"]),
                 new KeyValuePair<string, string>("client_secret", Configuration["AuthRequestParams:client_secret"])
             };
+
+            if (refreshToken == null)
+            {
+                requestParams.Add(new KeyValuePair<string, string>("username", loginCredential.Username));
+                requestParams.Add(new KeyValuePair<string, string>("password", loginCredential.Password));
+                requestParams.Add(new KeyValuePair<string, string>("grant_type", Configuration["AuthRequestParams:grant_type"]));
+            }
+            else
+            {
+                requestParams.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
+                requestParams.Add(new KeyValuePair<string, string>("refresh_token", refreshToken));
+            }
+
 
             using (var httpClient = new HttpClient())
             {

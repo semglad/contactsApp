@@ -16,12 +16,25 @@ export class LoginService {
 
   getAccessToken(accessCredentials?: AccessCredentials): Observable<AccessToken> {
     if (accessCredentials) {
-      return this.http.post(this.url, accessCredentials).map((response) => {
+      const tokenParams = {
+        'LoginCredential': accessCredentials,
+        'RefreshToken': null
+      }
+      return this.http.post(this.url, tokenParams).map((response) => {
         localStorage.setItem('caAccessToken', JSON.stringify(response));
         return response as AccessToken;
       });
     } else {
-      return JSON.parse(localStorage.getItem('caAccessToken'));
+      const currentToken = JSON.parse(localStorage.getItem('caAccessToken'));
+      const refreshToken = currentToken['refresh_token'];
+      const tokenParams = {
+        'LoginCredential': null,
+        'RefreshToken': refreshToken
+      };
+      return this.http.post(this.url, tokenParams).map((response) => {
+        localStorage.setItem('caAccessToken', JSON.stringify(response));
+        return response as AccessToken;
+      });
     }
   }
 }

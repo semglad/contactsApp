@@ -10,17 +10,17 @@ import {environment} from '../../../environments/environment';
 export class ContactHttpService {
 
   private url: string;
-  private authHeader: string;
+//  private authHeader: string;
 
   constructor(private http: HttpClient) {
 //    this.url = 'http://localhost:50247/api/contacts'; 'http://contactswebapi20171129012221.azurewebsites.net/api/contacts';
     this.url = environment.contactsEndpointUrl;
-    this.authHeader = 'Bearer ' + JSON.parse(localStorage.getItem('caAccessToken')).access_token;
+//    this.authHeader = 'Bearer ' + JSON.parse(localStorage.getItem('caAccessToken')).access_token;
   }
 
   get(): Observable<Contact[]> {
     return this.http.get(this.url).map((response) => {
-      return response as Contact[];
+      return response['resultContacts'] as Contact[];
     });
   }
 
@@ -30,7 +30,7 @@ export class ContactHttpService {
   }
 
   del(id: number): Observable<boolean> {
-    return this.http.delete(this.url + '/' + id, {headers: new HttpHeaders().set('Authorization', this.authHeader)}).map((response) => {
+    return this.http.delete(this.url + '/' + id).map(() => {
       return true;
     });
   }

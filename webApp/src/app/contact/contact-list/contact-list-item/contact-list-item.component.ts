@@ -31,10 +31,10 @@ export class ContactListItemComponent implements OnInit {
   }
 
   onUpdateContact() {
-    this.router.navigate(['/contacts', this.contact.id, true]);
+    this.router.navigate(['/ca/contacts', this.contact.id, true]);
   }
 
   onContactSelect () {
-      this.router.navigate(['/contacts', this.contact.id, false]);
+      this.router.navigate(['/ca/contacts', this.contact.id, false]);
   }
 }

@@ -64,6 +64,6 @@ export class ContactListComponent implements OnInit {
   }
 
   addContact() {
-    this.router.navigate(['/edit-view-contact', true]);
+    this.router.navigate(['/ca/edit-view-contact', true]);
   }
 }

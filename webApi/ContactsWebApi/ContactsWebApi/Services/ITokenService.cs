@@ -6,6 +6,6 @@ namespace ContactsWebApi.Services
 {
     public interface ITokenService
     {
-        Task<AccessToken> GetToken(LoginCredentials loginCredential);
+        Task<AccessToken> GetToken(LoginCredentials loginCredential, string refreshToken);
     }
 }

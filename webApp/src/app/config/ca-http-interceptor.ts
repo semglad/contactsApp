@@ -2,19 +2,24 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {HttpMessageDialogComponent} from '../http-message-dialog/http-message-dialog.component';
-import {HelloService} from './hello.service';
 import {Injectable, Injector} from '@angular/core';
+import {LoginService} from '../login/services/login.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class CaHttpInterceptor implements HttpInterceptor {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private injector: Injector, private router: Router) {}
+
+  private static getStoredToken() {
+    return JSON.parse(localStorage.getItem('caAccessToken'));
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const token = this.getStoredToken();
+    const token = CaHttpInterceptor.getStoredToken();
 
     if (token) {
       const request = req.clone({setHeaders: {Authorization: token.token_type + ' ' + token.access_token}});
@@ -30,17 +35,29 @@ export class CaHttpInterceptor implements HttpInterceptor {
       if (response instanceof HttpErrorResponse) {
         switch ((<HttpErrorResponse>response).status) {
           case 401:
-            console.log('Error 401');
-            this.dialog.open(HttpMessageDialogComponent, {
-              width: '400px',
-              data: 'Invalid username or password. Please try again.'
-            });
+            if (localStorage.getItem('caAccessToken')) {
+            const loginService = this.injector.get(LoginService);
+              loginService.getAccessToken(null).subscribe(() => {
+                this.dialog.open(HttpMessageDialogComponent, {
+                  width: '400px',
+                  data: 'Your session had expired but we renewed it for you. Please try again.'
+                });
+              }, () => {
+                this.dialog.open(HttpMessageDialogComponent, {
+                  width: '400px',
+                  data: 'Your session expired and we were unable to renew it for you. Please login again.'
+                });
+                this.router.navigate(['/login']);
+              });
+            } else {
+            this.router.navigate(['/login', true]);
+            }
             break;
           default:
-            console.log('Error ' + (<HttpErrorResponse>response).status);
             this.dialog.open(HttpMessageDialogComponent, {
               width: '400px',
-              data: 'Something went wrong. Please contact the administrator of the site.'
+              data: 'Something went wrong. Please contact the administrator of the site and pass them this error code: '
+              + (<HttpErrorResponse>response).status
             });
             break;
         }
@@ -48,9 +65,5 @@ export class CaHttpInterceptor implements HttpInterceptor {
 
       return Observable.throw(response);
     });
-  }
-
-  private getStoredToken() {
-    return JSON.parse(localStorage.getItem('caAccessToken'));
   }
 }

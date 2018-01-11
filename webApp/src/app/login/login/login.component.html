@@ -7,4 +7,4 @@
 </mat-form-field>
 <br>
 <button mat-raised-button (click)="submitLogin(false)" [disabled]="checkForEmptyFields()">Submit</button>
-<p *ngIf="loginInvalid" style="color: red">Please check credential validity!</p>
+<p *ngIf="error" style="color: red">Please check credential validity!</p>

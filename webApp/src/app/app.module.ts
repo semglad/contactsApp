@@ -18,29 +18,43 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginService} from './login/services/login.service';
 import {CaHttpInterceptor} from './config/ca-http-interceptor';
 import { HttpMessageDialogComponent } from './http-message-dialog/http-message-dialog.component';
-import {HelloService} from './config/hello.service';
+import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ContactListComponent
+    component: LoginComponent
   },
   {
-    path: 'edit-view-contact',
-    component: AddContactComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path: 'edit-view-contact/:new',
-    component: AddContactComponent
+    path: 'login/:error',
+    component: LoginComponent
   },
   {
-    path: 'contacts',
-    component: ContactListComponent
+    path: 'ca',
+    component: AppLayoutComponent,
+    children: [
+      {
+        path: 'edit-view-contact',
+        component: AddContactComponent
+      },
+      {
+        path: 'edit-view-contact/:new',
+        component: AddContactComponent
+      },
+      {
+        path: 'contacts',
+        component: ContactListComponent
+      },
+      {
+        path: 'contacts/:id/:edit',
+        component: AddContactComponent
+      }
+    ]
   },
-  {
-    path: 'contacts/:id/:edit',
-    component: AddContactComponent
-  }
 ];
 
 @NgModule({
@@ -51,7 +65,8 @@ const routes: Routes = [
     AddContactComponent,
     ContactPhonePipe,
     LoginComponent,
-    HttpMessageDialogComponent
+    HttpMessageDialogComponent,
+    AppLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +82,6 @@ const routes: Routes = [
     LoginService,
     BreakpointObserver,
     MediaMatcher,
-    HelloService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CaHttpInterceptor,

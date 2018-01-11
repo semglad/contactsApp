@@ -83,9 +83,9 @@ export class AddContactComponent implements OnInit {
       }
     } else {
       if (!returnToList && !this.isNew) {
-        this.router.navigate(['/contacts', this.contact.id, false]);
+        this.router.navigate(['/ca/contacts', this.contact.id, false]);
       } else {
-        this.router.navigate(['/contacts']);
+        this.router.navigate(['/ca/contacts']);
       }
 
       this.isEdited = false;

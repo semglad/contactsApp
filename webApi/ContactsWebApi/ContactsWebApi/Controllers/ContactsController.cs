@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ContactsWebApi.Repositories;
 using ContactsWebApi.Services;
@@ -26,8 +27,10 @@ namespace ContactsWebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            var user = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
             var contacts = _contactService.FindContacts();
-            return new JsonResult(contacts);
+            var result = new { resultContacts = contacts, resultUser = user };
+            return new JsonResult(result);
         }
 
         [HttpGet("{id}")]
